@@ -1,0 +1,11 @@
+spring:
+  main:
+    web-application-type: none
+  grpc:
+    server:
+      port: 9091 # Port of the client tracking runner application
+
+adapters:
+  channels:
+    customer:
+      address: localhost:9092

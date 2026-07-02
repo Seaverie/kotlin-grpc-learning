@@ -1,0 +1,17 @@
+syntax="proto3";
+
+option java_multiple_files = true;
+option java_outer_classname = "CustomerProto";
+option java_package = "com.cmcb.testing.customer.proto";
+
+service CustomerService{
+  rpc getCustomer(req) returns (res);
+}
+
+message req{
+  string name = 1;
+}
+
+message res{
+  string name = 1;
+}

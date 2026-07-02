@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm")
-    id("org.springframework.boot")
 }
 
 group = "com.chipmong"
@@ -12,11 +11,10 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation(project(":platform:observability"))
-}
 
-kotlin {
-    jvmToolchain(17)
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("io.micrometer:micrometer-tracing-bridge-otel")
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp")
 }
 
 tasks.test {

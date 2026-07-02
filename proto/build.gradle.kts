@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id("org.springframework.boot")
+    id("com.google.protobuf")
 }
 
 group = "com.chipmong"
@@ -12,12 +12,8 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation(project(":platform:observability"))
 }
 
-kotlin {
-    jvmToolchain(17)
-}
 
 tasks.test {
     useJUnitPlatform()

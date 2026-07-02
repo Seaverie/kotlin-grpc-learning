@@ -1,12 +1,13 @@
-package com.cmcb.cus
+package com.cmcb.Testingcus
 
 import com.cmcb.platform.observability.AdapterConfig
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
 
-@SpringBootApplication(scanBasePackages = ["com.cmcb"])
-class CustomerApplication
+@SpringBootApplication
+@EnableConfigurationProperties(AdapterConfig::class)
+class TestingCustomerApplication
 fun main(args: Array<String>) {
-    runApplication<CustomerApplication>(*args)
+    runApplication<TestingCustomerApplication>(*args)
 }

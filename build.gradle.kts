@@ -25,7 +25,6 @@ subprojects {
 	apply(plugin = "io.spring.dependency-management")
 	apply(plugin = "com.google.protobuf")
 
-	// Use configure<T> to target the extensions explicitly
 	configure<org.gradle.api.plugins.JavaPluginExtension> {
 		toolchain {
 			languageVersion.set(JavaLanguageVersion.of(17))
@@ -36,8 +35,22 @@ subprojects {
 		jvmToolchain(17)
 	}
 
-	// Use string literals "implementation" and "testImplementation"
+	// Disable bootJar for structural/library modules that don't run an app
+	if (project.path == ":proto" || project.path == ":services") {
+		tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+			enabled = false
+		}
+		tasks.named<Jar>("jar") {
+			enabled = true
+		}
+	}
+
 	dependencies {
+		// Do not let :proto or the parent :services module import the :proto dependency
+		if (project.path != ":proto" && project.path != ":services") {
+			"implementation"(project(":proto"))
+		}
+
 		"implementation"("org.jetbrains.kotlin:kotlin-reflect")
 		"implementation"("tools.jackson.module:jackson-module-kotlin")
 
@@ -46,18 +59,22 @@ subprojects {
 
 		"implementation"("org.springframework.boot:spring-boot-starter-grpc-server")
 		"implementation"("org.springframework.boot:spring-boot-starter-grpc-client")
+		"implementation"("io.grpc:grpc-netty")
+		"implementation"("io.grpc:grpc-netty-shaded")
 
-		// Replaced kotlin("test") shorthand with its explicit coordinate string
 		"testImplementation"("org.jetbrains.kotlin:kotlin-test")
+
 	}
 
 	tasks.withType<Test> {
 		useJUnitPlatform()
 	}
 }
+
 dependencies {
 	implementation(kotlin("stdlib-jdk8"))
 }
+
 repositories {
 	mavenCentral()
 }

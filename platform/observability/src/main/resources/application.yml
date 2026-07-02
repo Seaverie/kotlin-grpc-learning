@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: platform-service # This name shows up in the Jaeger UI service dropdown
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0 # 1.0 means sample 100% of requests (perfect for testing)
+  otlp:
+    tracing:
+      # Jaeger's standard OTLP receiver port over HTTP is 4318
+      endpoint: http://localhost:4318/v1/traces
